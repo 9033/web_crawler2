@@ -1,0 +1,496 @@
+<html lang="ko"><head>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="text/html; charset=utf-8" http-equiv="content-type"/>
+<meta content="kr" http-equiv="content-language"/>
+<meta content="text/css" http-equiv="content-style-type"/>
+<meta content="no-cache" http-equiv="pragma"/>
+<meta content="no-cache" http-equiv="cache-control"/>
+<meta content="no" http-equiv="imagetoolbar"/>
+<meta content="(c)2012" name="copyright"/>
+<meta content="대한민국 대표 기업공시채널 KIND" name="description"/>
+<meta content="대한민국 대표 기업공시채널 KIND" name="keywords"/>
+<title>대한민국 대표 기업공시채널 KIND</title>
+<link href="../js/jquery/themes-base/jquery-ui.min.css" media="all" rel="stylesheet" type="text/css"/>
+<link href="../css/default_new.css" media="all" rel="stylesheet" type="text/css"/>
+<link href="../css/common.css" media="all" rel="stylesheet" type="text/css"/>
+<link href="../css/popup.css" media="all" rel="stylesheet" type="text/css"/>
+<!--[if lt IE 9]>
+<script type="text/javascript" src="../js/html5shiv.js"></script>
+<![endif]-->
+<script src="../js/trans.js" type="text/javascript"></script>
+<script src="../js/jquery/jquery.js" type="text/javascript"></script>
+<script src="../js/jquery/jquery-ui.min.js" type="text/javascript"></script>
+<script src="../js/common.js" type="text/javascript"></script>
+<script src="../js/common-pop.js" type="text/javascript"></script>
+<script src="../js/common-ajax.js" type="text/javascript"></script>
+<script src="../js/JCommon.js" type="text/javascript"></script>
+</head>
+<body class="pop">
+<header class="popup">
+<h1 class="ttl type-99" id="title">신규상장기업 상세</h1>
+</header>
+<!-- rMateChartH5 에서 사용하는 스타일(범례, 프리로더, 스크롤 차트, 히스토리 차트에 한함) -->
+<link href="/chart5/rMateChartH5/Assets/Css/rMateChartH5.css" rel="stylesheet" type="text/css"/>
+<!-- IE7, 8 에서 차트 생성하고자 하는 경우 -->
+<!--[if IE]><script language="javascript" type="text/javascript" src="/chart5/rMateChartH5/JS/excanvas.js"></script><![endif]-->
+<!-- rMateChartH5 라이센스 -->
+<script language="javascript" src="/chart5/LicenseKey/rMateChartH5License.js?version=20201204" type="text/javascript"></script>
+<!-- 실제적인 rMateChartH5 라이브러리 -->
+<!-- script language="javascript" type="text/javascript" src="/chart5/rMateChartH5/JS/rMateChartH5.js"></script -->
+<script language="javascript" src="/chart5/rMateChartH5/JS/rMateCandleChartH5.js" type="text/javascript"></script>
+<form id="searchForm" method="post" name="searchForm">
+<input id="method" name="method" type="hidden" value="searchListComPubofrDetail"/>
+<input id="menuIndex" name="menuIndex" type="hidden" value="2"/>
+<input id="marketType" name="marketType" type="hidden" value="2"/>
+<input id="kisComCd" name="kisComCd" type="hidden" value="082488"/>
+<input id="isurCd" name="isurCd" type="hidden" value="29069"/>
+<input id="bzProcsNo" name="bzProcsNo" type="hidden" value="20200131000059"/>
+<input id="titleName" name="titleName" type="hidden" value="소룩스"/>
+<section class="contents popup">
+<nav class="tabgroup type-00 mt20">
+<ul>
+<li class="first" id="tabName" onclick="fnTabMenu('0');"><a href="#" title="회사개요"><span>회사개요</span></a></li>
+<li class="fiscalInfo" id="tabName" onclick="fnTabMenu('1');"><a href="#" title="재무정보"><span>재무정보</span></a></li>
+<li class="last active" id="tabName" onclick="fnTabMenu('2');"><a href="#" title="공모정보"><span>공모정보</span></a></li>
+</ul>
+<div class="clear"></div>
+</nav>
+<div class="tabzone" id="tab-contents">
+<input id="comAbbrv" name="comAbbrv" type="hidden" value=""/>
+<hgroup class="title type-01">
+<h2>공모개요</h2>
+</hgroup>
+<table class="detail type-01 chain-head mt10" summary="">
+<caption>보기</caption>
+<colgroup>
+<col width="137"/>
+<col width="*"/>
+<col width="137"/>
+<col width="*"/>
+</colgroup>
+<tbody>
+<tr class="first">
+<th class="first" scope="row">IR일정</th>
+<td>
+				
+					2020-10-15 ~ 2020-10-23
+					
+				
+			</td>
+<th scope="row">수요예측일정</th>
+<td>
+				
+					2020-10-23 ~ 2020-10-26
+					
+				
+			</td>
+</tr>
+<tr>
+<th class="first" scope="row">공모청약일정</th>
+<td>
+				
+					2020-10-29 ~ 2020-10-30
+					
+				
+			</td>
+<th scope="row">납입일</th>
+<td>
+				
+					2020-11-02
+					
+				
+			</td>
+</tr>
+<tr>
+<th class="first" scope="row">청약경쟁률</th>
+<td colspan="3">
+				
+					1660.08 : 1
+					
+				
+			</td>
+</tr>
+<tr>
+<th class="first" scope="row">상장일</th>
+<td colspan="3">
+				
+					2020-11-06
+					
+				
+			</td>
+</tr>
+<tr>
+<th class="first" scope="row">액면가</th>
+<td class="txr" colspan="3">
+				
+					100 원
+					
+				
+			</td>
+</tr>
+<tr>
+<th class="first" scope="row">공모가격</th>
+<td class="txr" colspan="3">
+				
+					10,000
+					
+				
+				 원
+			</td>
+</tr>
+</tbody>
+</table>
+<table class="detail type-01 chain-part mt3" summary="">
+<caption>보기</caption>
+<colgroup>
+<col width="137"/>
+<col width="*"/>
+<col width="*"/>
+</colgroup>
+<tbody>
+<tr class="first">
+<th class="first" rowspan="2" scope="rowgroup">발행주식수</th>
+<th scope="col">공모전 (주)</th>
+<th scope="col">공모후 (주)</th>
+</tr>
+<tr>
+<td class="txr">
+				
+					6,479,160
+					
+				
+			</td>
+<td class="txr">
+				
+					8,158,160
+					
+				
+			</td>
+</tr>
+</tbody>
+</table>
+<table class="detail type-01 chain-part mt3" summary="">
+<caption>보기</caption>
+<colgroup>
+<col width="137"/>
+<col width="*"/>
+<col width="*"/>
+<col width="*"/>
+</colgroup>
+<tbody>
+<tr class="first">
+<th class="first" rowspan="4" scope="rowgroup">공모금액</th>
+<th scope="colgroup">구분</th>
+<th scope="col">주식수 (주)</th>
+<th scope="col">공모금액 (백만원)</th>
+</tr>
+<tr>
+<th scope="row">모집</th>
+<td class="txr">
+				
+					1,619,790
+					
+				
+			</td>
+<td class="txr">
+				
+					16,198
+					
+				
+			</td>
+</tr>
+<tr>
+<th scope="row">매출</th>
+<td class="txr">
+				
+					353,880
+					
+				
+			</td>
+<td class="txr">
+				
+					3,539
+					
+				
+			</td>
+</tr>
+<tr>
+<th scope="row">합계</th>
+<td class="txr">
+				
+					1,973,670
+					
+				
+			</td>
+<td class="txr">
+				
+					19,737
+					
+				
+			</td>
+</tr>
+</tbody>
+</table>
+<table class="detail type-01 chain-foot mt3" summary="">
+<caption>보기</caption>
+<colgroup>
+<col width="137"/>
+<col width="*"/>
+<col width="*"/>
+<col width="*"/>
+<col width="*"/>
+</colgroup>
+<tbody>
+<tr class="first">
+<th class="first" rowspan="6" scope="rowgroup">그룹별배정</th>
+<th scope="colgroup">구분</th>
+<th scope="col">주식수 (주)</th>
+<th scope="col">공모금액 (백만원)</th>
+<th scope="col">비율 (%)</th>
+</tr>
+<tr>
+<th scope="row">우리사주조합</th>
+<td class="txr">
+				
+					0
+					
+				
+			</td>
+<td class="txr">
+				
+					0
+					
+				
+			</td>
+<td class="txr">
+				
+					0
+					
+				
+			</td>
+</tr>
+<tr>
+<th scope="row">기관투자자</th>
+<td class="txr">
+				
+					1,578,936
+					
+				
+			</td>
+<td class="txr">
+				
+					1,578,936,000,000
+					
+				
+			</td>
+<td class="txr">
+				
+					80
+					
+				
+			</td>
+</tr>
+<tr>
+<th scope="row">일반투자자</th>
+<td class="txr">
+				
+					393,734
+					
+				
+			</td>
+<td class="txr">
+				
+					393,734,000,000
+					
+				
+			</td>
+<td class="txr">
+				
+					20
+					
+				
+			</td>
+</tr>
+<tr>
+<th scope="row">기타</th>
+<td class="txr">
+				
+					0
+					
+				
+			</td>
+<td class="txr">
+				
+					0
+					
+				
+			</td>
+<td class="txr">
+				
+					0
+					
+				
+			</td>
+</tr>
+<tr>
+<th scope="row">합계</th>
+<td class="txr">
+				
+					1,973,670
+					
+				
+			</td>
+<td class="txr">
+				
+					1,973,670,000,000
+					
+				
+			</td>
+<td class="txr">
+				
+					100
+					
+				
+			</td>
+</tr>
+</tbody>
+</table>
+<dl class="info-group type-00 pt10">
+<dt>상기 내용은 상장주선인(증권사) 제공 자료입니다.</dt>
+<dd>2012년 5월 이전 상장법인의 경우 일부 항목의 내용이 미제공 됩니다. </dd>
+</dl></div>
+</section>
+</form>
+<script language="javascript" type="text/JavaScript">
+<!--
+$(document).ready(function(){
+	fnInit();
+});
+
+function fnPopClose() {
+	window.close();
+}
+
+//초기 로딩시
+function fnInit(){
+	fnTabMenu("0");
+}
+
+//상단 메뉴텝 클릭시 이미지 변경해 주는 스크립트
+function fnTabMenu(menuIdx){
+	$(document).find("li[id=tabName]").each(function(index){
+		if($(this).hasClass("active")) {
+			$(this).removeClass("active");
+		}
+
+		if(index == menuIdx) {
+			$(this).addClass("active");
+		}
+	});
+
+	$("#searchForm > #menuIndex").val(menuIdx);
+	
+	//서브메뉴 조회
+	fnSearch();
+}
+
+//최종검색루틴
+function fnSearch() {
+
+	var		vMenuIndex = $("#searchForm > #menuIndex").val();
+	var		vMethod = "";
+	if(vMenuIndex == "0") {
+		vMethod = "searchListComOvrvwDetail";		//기업개요
+	} else if(vMenuIndex == "1") {
+		vMethod = "searchListComFncContnDetail";	//재무사항
+	} else if(vMenuIndex == "2") {
+		vMethod = "searchListComPubofrDetail";		//공모
+	} else {
+		return;
+	}
+
+	$("#searchForm > #method").val(vMethod);
+	$("#searchForm").ajaxSubmit({
+		  ajaxUrl : '/listinvstg/listcomdetail.do'
+		, ajaxCallBack: fnSearchCallBack
+	});
+}
+
+function fnSearchCallBack(data){
+	$("#tab-contents").empty().append(data);
+}
+
+//-->
+</script>
+<footer class="popup">
+<div class="btn-group type-98">
+<a class="btn-sprite type-98 vmiddle" href="#myclose" onclick="fnPopClose(); return false;" title="닫기"><span>닫 기</span></a>
+</div>
+</footer>
+<!-- 범례 START -->
+<div id="marketSection" style="position:absolute; display:none">
+<section class="icn_tbox" style="width:400px;top:-30px; left:10px">
+<ul>
+<li>
+<img alt="유가증권" class="vmiddle" src="../images/common/icn_t_yu.gif"/> 유가증권
+			</li>
+<li>
+<img alt="코스닥" class="vmiddle" src="../images/common/icn_t_ko.gif"/> 코스닥
+			</li>
+<li>
+<img alt="코넥스" class="vmiddle" src="../images/common/icn_t_konex.gif"/> 코넥스
+			</li>
+<li>
+<img alt="관리종목" class="vmiddle" src="../images/common/icn_t_kwan.gif"/> 관리종목
+			</li>
+<li>
+<img alt="투자주의환기종목" class="vmiddle" src="../images/common/icn_t_hwan.gif"/> 투자주의환기종목
+			</li>
+<li>
+<img alt="불성실공시법인" class="vmiddle" src="../images/common/icn_t_bul.gif"/> 불성실공시법인
+			</li>
+<li>
+<img alt="폐지법인" class="vmiddle" src="../images/common/icn_t_pe.gif"/> 폐지법인
+			</li>
+<li>
+<img alt="KTOP30" class="vmiddle" src="../images/common/icn_t_ktop.gif"/> KTOP30
+			</li>
+<li>
+<img alt="KOSPI200" class="vmiddle" src="../images/common/icn_t_k200.gif"/> KOSPI200
+			</li>
+<li>
+<img alt="KOSDAQ150" class="vmiddle" src="../images/common/icn_t_q150.gif"/> KOSDAQ150
+			</li>
+<li>
+<img alt="KRX300" class="vmiddle" src="../images/common/icn_t_x300.gif"/> KRX300
+			</li>
+<li>
+<img alt="정정있음" class="vmiddle" src="../images/common/icn_t_jung.gif"/> 정정있음
+			</li>
+<li>
+<img alt="투자주의" class="vmiddle" src="../images/common/icn_t_joo.gif"/> 투자주의
+			</li>
+<li>
+<img alt="투자경고" class="vmiddle" src="../images/common/icn_t_kyung.gif"/> 투자경고
+			</li>
+<li>
+<img alt="투자위험" class="vmiddle" src="../images/common/icn_t_wii.gif"/> 투자위험
+			</li>
+</ul>
+<div class="clear"></div>
+<img alt="" class="tl" src="../images/common/icn_tbox_tl.png"/>
+<img alt="" class="bl" src="../images/common/icn_tbox_bl.gif"/>
+<img alt="" class="tr" src="../images/common/icn_tbox_tr.gif"/>
+<img alt="" class="br" src="../images/common/icn_tbox_br.gif"/>
+<div class="tm"></div>
+<div class="lm"></div>
+<div class="bm"></div>
+<div class="rm"></div>
+</section>
+</div>
+<!-- 범례 END -->
+<div aria-labelledby="ui-id-1" class="ui-dialog ui-widget ui-widget-content ui-corner-all" role="dialog" style="outline: 0px; z-index: 1002; height: auto; width: 300px; top: 304px; left: 322.5px; display: none;" tabindex="-1"><div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix"><span class="ui-dialog-title" id="ui-id-1">자료를 조회 중입니다.</span><a class="ui-dialog-titlebar-close ui-corner-all" href="#" role="button"><span class="ui-icon ui-icon-closethick">close</span></a></div><div class="loading ui-dialog-content ui-widget-content" id="dialog-loading" scrollleft="0" scrolltop="0" style="width: auto; min-height: 0px; height: 42px;">
+<span>
+<img src="/images/loader/ajax-loader01.gif"/>
+</span>
+</div></div><div class="rMateH5__Root" style="visibility: hidden; position: absolute; left: -6000px; top: -300px; width: 5000px;"><div style='font-family: 나눔고딕, 맑은고딕, "Nanum Gothic", "Malgun Gothic", Dotum, "Apple Gothic", verdana, arial, helvetica, sans-serif; font-size: 11px; font-weight: 400; text-decoration: none solid rgb(136, 136, 136); font-style: normal; text-align: start; text-indent: 0px; line-height: 13.2px; letter-spacing: normal; position: absolute;'>순이익증가율</div></div></body></html>

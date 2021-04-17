@@ -34,6 +34,8 @@ class Crawler_BS4(object):
         self.html = driver.page_source
         self.soup = BeautifulSoup(self.html, "html.parser")
 
+        self.html_save(self.soup)
+
 
     def find_index(self):
         
@@ -64,9 +66,25 @@ class Crawler_BS4(object):
             except AttributeError as error:
                 logger.info(error)
 
-    def InvstgCorp(self, df):
-        """예비심사기업"""
+    def html_save(self, soup):
 
+        save_path = os.path.join(BASE_DIR, 'html_save')
+        try:
+            os.mkdir(save_path)
+        except:
+            pass
+
+        save_file_path = os.path.join(save_path, 'html_file.txt')
+
+        with open(save_file_path, "w", encoding = "utf-8") as f:
+
+            for line in soup:
+
+                f.write(str(line) + '\n')
+
+
+    def data_to_df(self, df):
+ 
         num = len(df)
 
         try:
@@ -75,57 +93,13 @@ class Crawler_BS4(object):
         except AttributeError as error:
             logger.info(error)
 
-        try:
-            for i in range(len(tbody)):
 
-                for trs in tbody[i].children:
-
-                    if isinstance(trs, NavigableString):
-                        continue
-
-                    temp_column_name = ''
-                    j = 0
-                    for temp in trs.children:
-                        if isinstance(temp, NavigableString):
-                            continue
-                        #print(temp)
-
-                        if j % 2 == 0:
-                            temp_column_name = temp.get_text().strip()
-                        elif j % 2 == 1:
-                            if temp_column_name in df.columns:
-                                df.at[num, temp_column_name] = temp.get_text().strip()
-                            else:
-                                pass
-
-                        j += 1
-
-            print(df) 
-        
-        except AttributeError as error:
-            logger.info(error)
-
-      
-
-        return df
-
-
-    def PubofrProgCom(self, df):
-        """공모기업현황"""
-
-        num = len(df)
-
-        try:
-            tbody = self.soup.findAll('tbody')
-            #print(tbody)
-        except AttributeError as error:
-            logger.info(error)
 
         try:
             for i in range(len(tbody)):
-
+                scope = ''
                 rowspan_num = 0
-                remain_num = 0
+                row_count = 0
                 temp_list = []
 
                 for trs in tbody[i].children:
@@ -138,68 +112,114 @@ class Crawler_BS4(object):
                     for temp in trs.children:
                         if isinstance(temp, NavigableString):
                             continue
-                        #print(temp)
 
-                        # if temp['rowspan'] is not None:
-                        #     rowspan_num = int(temp['rowspan'])
-                        #     remain_num = rowspan_num
-                        # else:
-                        #     pass
                         try:
                             rowspan_num = int(temp['rowspan'])
-                            logger.info("rowspan_num : {} ".format(rowspan_num))
-                            remain_num = rowspan_num
-                            logger.info("remain_num : {} ".format(remain_num))
-                        except Exception as error:
-                            logger.info(error)
+                            row_count = rowspan_num
+                            temp_list = []
+                        except:
                             pass
+
+                        try: 
+                            class_first = temp['class']
+                            # print(class_first)
+                            if class_first[0] == 'first':
+                                scope = temp['scope']
+
+                                if scope == 'col':
+                                    temp_list = []
+                            else:
+                                pass
+
+
+                        except:
+                            pass
+                        
+                        # print("scope : ", scope)
+                        # print("rowspan_num : ", rowspan_num)
+                        # print("row_count : ", row_count)
 
                         if rowspan_num == 0:
 
-                            if j % 2 == 0:
-                                temp_column_name = temp.get_text().strip()
-                            elif j % 2 == 1:
+                            if scope == 'row':
+
+                                if j % 2 == 0:
+                                    temp_column_name = temp.get_text().strip()
+                                elif j % 2 == 1:
+                                    if temp_column_name in df.columns:
+                                        df.at[num, temp_column_name] = temp.get_text().strip()
+                                    else:
+                                        pass
+
+                            else:
+                                if j < 2:
+                                    temp_list.append(temp.get_text().strip())    
+                                elif j == 2:
+                                    # print(temp_list)
+                                    temp_join_list = [temp_list[0], temp_list[1]]
+                                    temp_column_name = '-'.join(temp_join_list)
+                                    if temp_column_name in df.columns:
+                                        df.at[num, temp_column_name] = temp.get_text().strip()
+                                    else:
+                                        pass 
+                                else:
+                                    pass                                                                
+
+
+
+                        elif rowspan_num == 2:
+                            if row_count == rowspan_num:
+                                # '발행주식수' 등 넣기 
+                                temp_list.append(temp.get_text().strip())
+
+                            else:
+                                # print(temp_list)
+                                temp_join_list = [temp_list[0], temp_list[j+1]]
+                                temp_column_name = '-'.join(temp_join_list)
+                                # print(temp_column_name)
                                 if temp_column_name in df.columns:
                                     df.at[num, temp_column_name] = temp.get_text().strip()
                                 else:
                                     pass
 
-                        elif remain_num == rowspan_num:
-                            temp_list.append(temp.get_text().strip())
+                        elif rowspan_num in [4,6]:
+                            if row_count == rowspan_num:
+                                if j in [0,2]:
+                                    # "공모금액" 그리고 "주식수 (주)" 넣기 
+                                    # "그룹별 배정" 그리고 "주식수 (주)" 넣기 
+                                    temp_list.append(temp.get_text().strip())
+                                else:
+                                    pass
 
-                        elif remain_num < rowspan_num:
-                            temp_join_list = [temp_list[0], temp_list[j+1]]
-                            temp_column_name = '-'.join(temp_join_list)
-                            if temp_column_name in df.columns:
-                                df.at[num, temp_column_name] = temp.get_text().strip()
                             else:
-                                pass                           
+                                if j == 0:
 
+                                    temp_list.append(temp.get_text().strip())
 
-
+                                elif j == 1:
+                                    # print(temp_list)
+                                    temp_join_list = [temp_list[0], temp_list[1], temp_list[(rowspan_num + 1)-row_count]]
+                                    temp_column_name = '-'.join(temp_join_list)
+                                    # print(temp_column_name)
+                                    if temp_column_name in df.columns:
+                                        df.at[num, temp_column_name] = temp.get_text().strip()
+                                    else:
+                                        pass
+                                else:
+                                    pass   
 
                         j += 1
-                        #print(df)
-                    logger.info("temp_list length : %d ", len(temp_list))
-
-                    remain_num -= 1
-
-                    if remain_num == 0:
-                        rowspan_num = 0
-                        temp_list = []
+                    # tr 달라질때 마다 
+                    row_count -= 1 
 
             print(df) 
         
-        except AttributeError as error:
+        except Exception as error:
             logger.info(error)
-        
+            return df 
 
-        return df 
-
-
-
- 
-            
+        logger.info("row 추가 완료")
+        return df          
 
 
 class Crawler_Selenium(object):
@@ -214,7 +234,7 @@ class Crawler_Selenium(object):
         try:
             driver = webdriver.Chrome(chromedriver_path)
             driver.get(self.url)
-            logger.info("driver 생성")
+            logger.info("Selenium driver 생성")
         except Exception as error:
             logging.info(error)
 
@@ -271,9 +291,7 @@ class Crawler_Selenium(object):
 
     def click_popup_list(self, driver, _list, df):
 
-        i = 0
-
-        for i in range(len(_list)):
+        for i in range(len(_list)): 
 
             try:
                 _list[i].click()
@@ -289,39 +307,39 @@ class Crawler_Selenium(object):
 
             time.sleep(3)
 
-            click_id = 'tabName'
-
-            list_by_id = self.find_list_by_id(driver, click_id)
-
             cbs4 = Crawler_BS4(driver)
 
             time.sleep(3)
 
-            #df = cbs4.InvstgCorp(df)
-            df = cbs4.PubofrProgCom(df)
+            df = cbs4.data_to_df(df)
 
             time.sleep(3)
 
-            # for _id in list_by_id[1:]:
-            #     try:
-            #         _id.click()
-            #     except Exception as error:
-            #         logger.info(error)
-            #         continue
+            # 사실상 신규상장기업현황 일때만 작동하게 됨 
+            try:
 
-            #     time.sleep(3)
+                click_id = 'tabName'
 
-            #     cbs4 = Crawler_BS4(driver)
+                list_by_id = self.find_list_by_id(driver, click_id)
 
-            #     time.sleep(3)
+                for _id in list_by_id[1:]:
+                    try:
+                        _id.click()
+                    except Exception as error:
+                        logger.info(error)
+                        continue
 
-            #     cbs4.run()
+                    time.sleep(3)
 
-            #     time.sleep(3)
+                    cbs4 = Crawler_BS4(driver)
 
+                    time.sleep(3)
+            
+                    df = cbs4.data_to_df(df)
 
-
-
+                    time.sleep(3)
+            except:
+                pass
 
             driver.close()
 
@@ -329,14 +347,14 @@ class Crawler_Selenium(object):
 
             i += 1
 
-
-            if i > 1:
-                break
+            #이 부분은 작동 테스트 할 때만 
+            # if i > 1:
+            #     break
 
         return df
 
 
-    def run(self):
+    def run(self, df, save_csv):
         logger.info("--------------------------------------------")  
         logger.info("process start")
         
@@ -345,25 +363,25 @@ class Crawler_Selenium(object):
         self.main_page = driver.current_window_handle
         time.sleep(3)
 
-        # #검색 시작 날짜 
-        # click_id = 'fromDate'
-        # day = '20201101'
-        # self.input_day(driver, click_id, day)
+        #검색 시작 날짜 
+        click_id = 'fromDate'
+        day = '20201101'
+        self.input_day(driver, click_id, day)
 
-        # time.sleep(2)
+        time.sleep(2)
 
-        # #검색 종료 날짜
-        # click_id = 'toDate'
-        # day = '20210101'
-        # self.input_day(driver, click_id, day)
+        #검색 종료 날짜
+        click_id = 'toDate'
+        day = '20210101'
+        self.input_day(driver, click_id, day)
 
-        # time.sleep(2)
+        time.sleep(2)
 
-        # #검색 누르기 
-        # class_name = 'btn-sprite.type-00.vmiddle.search-btn'
-        # search = self.find_by_class(driver, class_name)
-        # search.click()
-        # time.sleep(3)
+        #검색 누르기 
+        class_name = 'btn-sprite.type-00.vmiddle.search-btn'
+        search = self.find_by_class(driver, class_name)
+        search.click()
+        time.sleep(3)
 
         #전체 페이지 갯수 가져오기 
         #나중에 페이지를 넘기기 위해서 가져옴
@@ -373,20 +391,12 @@ class Crawler_Selenium(object):
         logger.info("index_num : {} ".format(index_num))
         logger.info("all_index_num : {}".format(all_index_num))
 
-
-        #click_css = 'img.vmiddle.legend'
         click_css = 'td.first'
 
         list_by_css = self.find_list_by_css(driver, click_css)
         time.sleep(3)
 
-        # df = DataFrame(columns = ['회사명', '심사청구일', '심사결과', '신규상장', '업종', '기업구분', '결산월', '상장(예정)주식수', '공모(예정)주식수', '상장주선인'])
-        df = DataFrame(columns = ['회사명', '설립일', '업종', '결산월', '기업구분',\
-             '수요예측일정', '공모청약일정', '상장(예정)일', '납입일', '희망공모가격',\
-             '발행주식수-공모전 (주)', '발행주식수-공모후 (주)',\
-             '공모금액-모집', '공모금액-매출', '공모금액-총액',\
-             '그룹별배정-우리사주조합', '그룹별배정-기관투자자', '그룹별배정-일반투자자', '그룹별배정-기타', '그룹별배정-합계'\
-             '사모 (주관사인수)'])
+
 
         df = self.click_popup_list(driver, list_by_css, df)
         time.sleep(3)
@@ -401,14 +411,12 @@ class Crawler_Selenium(object):
             next_page = driver.find_element_by_xpath(next_page_xpath)
             logger.info("index_num : {} ".format(index_num))
             
-            # if next_page.find_element_by_class_name()
             next_page.click()
             time.sleep(3)
 
             self.main_page = driver.current_window_handle
             time.sleep(3)
 
-            #click_css = 'img.vmiddle.legend'
             click_css = 'td.first'
 
             list_by_css = self.find_list_by_css(driver, click_css)
@@ -420,7 +428,7 @@ class Crawler_Selenium(object):
             
         print(df)
 
-        df.to_csv(os.path.join(BASE_DIR, "test.csv"))
+        df.to_csv(os.path.join(BASE_DIR, save_csv))
 
         self.down_chromedriver(driver)
 
@@ -430,14 +438,26 @@ class Crawler_Selenium(object):
 if __name__ == "__main__":
     
     #예비심사기업
-    # url = "https://kind.krx.co.kr/listinvstg/listinvstgcom.do?method=searchListInvstgCorpMain"
-    # cs = Crawler_Selenium(url)
-    # cs.run()
+    url = "https://kind.krx.co.kr/listinvstg/listinvstgcom.do?method=searchListInvstgCorpMain"
+    cs = Crawler_Selenium(url)
+    df = DataFrame(columns = ['회사명', '심사청구일', '심사결과', '신규상장', '업종', '기업구분', '결산월', '상장(예정)주식수', '공모(예정)주식수', '상장주선인'])
+    save_csv = 'test1.csv'
+    cs.run(df, save_csv)
     #공모기업현황
     url = "https://kind.krx.co.kr/listinvstg/pubofrprogcom.do?method=searchPubofrProgComMain"
     cs = Crawler_Selenium(url)
-    cs.run()
+    df = DataFrame(columns = ['회사명', '설립일', '업종', '결산월', '기업구분',\
+        '수요예측일정', '공모청약일정', '상장(예정)일', '납입일', '희망공모가격',\
+        '발행주식수-공모전 (주)', '발행주식수-공모후 (주)',\
+        '공모금액-주식수 (주)-모집', '공모금액-주식수 (주)-매출', '공모금액-주식수 (주)-총액',\
+        '그룹별배정-주식수 (주)-우리사주조합', '그룹별배정-주식수 (주)-기관투자자', '그룹별배정-주식수 (주)-일반투자자', '그룹별배정-주식수 (주)-기타', '그룹별배정-주식수 (주)-합계',\
+        '사모(주관사인수)-주식수',\
+        '상장주식수-보통주', '의무보유-보통주', '우리사주-보통주', '유통가능주식수-보통주'])
+    save_csv = 'test2.csv'
+    cs.run(df, save_csv)
     #신규상장기업현황 
-    # url = "https://kind.krx.co.kr/listinvstg/listingcompany.do?method=searchListingTypeMain"
-    # cs = Crawler_Selenium(url)
-    # cs.run()
+    url = "https://kind.krx.co.kr/listinvstg/listingcompany.do?method=searchListingTypeMain"
+    cs = Crawler_Selenium(url)
+    df = DataFrame(columns= ['회사명', '청약경쟁률'])
+    save_csv = 'test3.csv'
+    cs.run(df, save_csv)
