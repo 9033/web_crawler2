@@ -141,6 +141,7 @@ class Crawler_BS4(object):
 
                         if rowspan_num == 0:
 
+                            # 보통 여기서 처리 
                             if scope == 'row':
 
                                 if j % 2 == 0:
@@ -151,8 +152,10 @@ class Crawler_BS4(object):
                                     else:
                                         pass
 
+                            # 유통가능주식수 부분을 처리하기 위함 
                             else:
                                 if j < 2:
+                                    # 각 항목명과 "보통주" 를 넣기 
                                     temp_list.append(temp.get_text().strip())    
                                 elif j == 2:
                                     # print(temp_list)
@@ -166,10 +169,10 @@ class Crawler_BS4(object):
                                     pass                                                                
 
 
-
+                        # 발행주식수 부분 처리
                         elif rowspan_num == 2:
                             if row_count == rowspan_num:
-                                # '발행주식수' 등 넣기 
+                                # '발행주식수', '공모전 (주)', '공모전 (후)' 를 넣기 
                                 temp_list.append(temp.get_text().strip())
 
                             else:
@@ -182,6 +185,8 @@ class Crawler_BS4(object):
                                 else:
                                     pass
 
+                        # 4 -> 공모금액 처리
+                        # 6 -> 그룹별배정 처리
                         elif rowspan_num in [4,6]:
                             if row_count == rowspan_num:
                                 if j in [0,2]:
@@ -193,7 +198,7 @@ class Crawler_BS4(object):
 
                             else:
                                 if j == 0:
-
+                                    # 항목명 넣기 
                                     temp_list.append(temp.get_text().strip())
 
                                 elif j == 1:
@@ -209,7 +214,7 @@ class Crawler_BS4(object):
                                     pass   
 
                         j += 1
-                    # tr 달라질때 마다 
+                    # 한 <tr> 태그 안 부분이 끝날때마다  
                     row_count -= 1 
 
             print(df) 
