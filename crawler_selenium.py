@@ -28,8 +28,10 @@ file_handler.setFormatter(formatter)
 logger.addHandler(file_handler)
 
 class Crawler_BS4(object):
+    """crawler 부분"""
 
     def __init__(self, driver):
+        """driver를 받아 BeautifulSoup 객체를 생성한다."""
 
         self.html = driver.page_source
         self.soup = BeautifulSoup(self.html, "html.parser")
@@ -84,6 +86,7 @@ class Crawler_BS4(object):
 
 
     def data_to_df(self, df):
+        """soup의 data 들을 DataFrame 으로 추가함"""
  
         num = len(df)
 
@@ -120,6 +123,7 @@ class Crawler_BS4(object):
                         except:
                             pass
 
+                        # temp 가 class="first" 이고 scope="col" 일때 
                         try: 
                             class_first = temp['class']
                             # print(class_first)
@@ -152,7 +156,7 @@ class Crawler_BS4(object):
                                     else:
                                         pass
 
-                            # 유통가능주식수 부분을 처리하기 위함 
+                            # "유통가능주식수" 부분을 처리하기 위함 
                             else:
                                 if j < 2:
                                     # 각 항목명과 "보통주" 를 넣기 
@@ -280,6 +284,7 @@ class Crawler_Selenium(object):
         return list_by_class
 
     def input_day(self, driver, click_id, day):
+        """청구일 기간 날짜를 입력하는 부분"""
         logger.info("click_id : {} ".format(click_id))
         logger.info("day {} ".format(day))
 
@@ -295,6 +300,7 @@ class Crawler_Selenium(object):
 
 
     def click_popup_list(self, driver, _list, df):
+        """popup 부분을 click 하여 main_page를 교체한 후 Crawler_BS4로 driver를 보낸다."""
 
         for i in range(len(_list)): 
 
@@ -401,12 +407,8 @@ class Crawler_Selenium(object):
         list_by_css = self.find_list_by_css(driver, click_css)
         time.sleep(3)
 
-
-
         df = self.click_popup_list(driver, list_by_css, df)
         time.sleep(3)
-
-
 
         next_page_xpath = '//*[@id="main-contents"]/section[2]/div[1]/a[{}]'.format(all_index_num + 3)
 
