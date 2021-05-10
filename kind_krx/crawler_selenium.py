@@ -2,30 +2,19 @@
 import os 
 import csv
 import time 
-import logging
 import pandas as pd 
 from pandas import DataFrame
 from bs4 import BeautifulSoup, NavigableString
+from libs.logging_process import Logging_process
+from libs.selenium_process import Selenium_process
+
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DATA_DIR = os.path.join(BASE_DIR, "data")
 
-logger = logging.getLogger()
-logger.setLevel(logging.INFO)
-formatter = logging.Formatter(fmt="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
-
-#log console 출력 
-stream_handler = logging.StreamHandler()
-stream_handler.setLevel(logging.INFO)
-stream_handler.setFormatter(formatter)
-logger.addHandler(stream_handler)
-
-#log file 저장 
-file_handler = logging.FileHandler("test.log", encoding = 'utf-8')
-file_handler.setLevel(logging.INFO)
-file_handler.setFormatter(formatter)
-logger.addHandler(file_handler)
+logger = Logging_process("crawler_selenium")
 
 class Crawler_BS4(object):
     """crawler 부분"""
@@ -70,7 +59,7 @@ class Crawler_BS4(object):
 
     def html_save(self, soup):
 
-        save_path = os.path.join(BASE_DIR, 'html_save')
+        save_path = os.path.join("data", 'html_file')
         try:
             os.mkdir(save_path)
         except:
@@ -235,53 +224,7 @@ class Crawler_Selenium(object):
 
     def __init__(self, url):
 
-        self.url = url
-        self.chromedriver_path = os.path.join(BASE_DIR, "chromedriver_win32", "chromedriver.exe")
-
-    def run_chromedriver(self, chromedriver_path):
-
-        try:
-            driver = webdriver.Chrome(chromedriver_path)
-            driver.get(self.url)
-            logger.info("Selenium driver 생성")
-        except Exception as error:
-            logging.info(error)
-
-        return driver
-
-    def down_chromedriver(self, driver):
-
-        driver.quit()
-
-    def find_by_id(self, driver, click_id):
-
-        find_id = driver.find_element_by_id(click_id)
-
-        return find_id
-
-    def find_list_by_id(self, driver, click_id):
-
-        list_by_id = driver.find_elements_by_id(click_id)
-
-        return list_by_id
-
-    def find_list_by_css(self, driver, click_css):
-
-        list_by_css = driver.find_elements_by_css_selector(click_css)
-
-        return list_by_css
-
-    def find_by_class(self, driver, class_name):
-
-        find_class = driver.find_element_by_class_name(class_name)
-
-        return find_class
-
-    def find_list_by_class(self, driver, class_name):
-
-        list_by_class = driver.find_elements_by_class_name(class_name)
-
-        return list_by_class
+        self.sp = Selenium_process(url)
 
     def input_day(self, driver, click_id, day):
         """청구일 기간 날짜를 입력하는 부분"""
@@ -289,14 +232,14 @@ class Crawler_Selenium(object):
         logger.info("day {} ".format(day))
 
         try:
-            find_id = self.find_by_id(driver, click_id)
+            find_id = self.sp.find_by_id(driver, click_id)
             find_id.clear()
             find_id.send_keys(day)
             time.sleep(2)
             find_id.send_keys(Keys.ENTER)
         except Exception as error:
             logger.info(error)
-            self.down_chromedriver(driver)
+            self.sp.down_chromedriver(driver)
 
 
     def click_popup_list(self, driver, _list, df):
@@ -370,7 +313,7 @@ class Crawler_Selenium(object):
         logger.info("process start")
         
         #driver 로딩
-        driver = self.run_chromedriver(self.chromedriver_path)
+        driver = self.sp.run_chromedriver()
         self.main_page = driver.current_window_handle
         time.sleep(3)
 
@@ -390,7 +333,7 @@ class Crawler_Selenium(object):
 
         #검색 누르기 
         class_name = 'btn-sprite.type-00.vmiddle.search-btn'
-        search = self.find_by_class(driver, class_name)
+        search = self.sp.find_by_class(driver, class_name)
         search.click()
         time.sleep(3)
 
@@ -404,7 +347,7 @@ class Crawler_Selenium(object):
 
         click_css = 'td.first'
 
-        list_by_css = self.find_list_by_css(driver, click_css)
+        list_by_css = self.sp.find_list_by_css(driver, click_css)
         time.sleep(3)
 
         df = self.click_popup_list(driver, list_by_css, df)
@@ -426,7 +369,7 @@ class Crawler_Selenium(object):
 
             click_css = 'td.first'
 
-            list_by_css = self.find_list_by_css(driver, click_css)
+            list_by_css = self.sp.find_list_by_css(driver, click_css)
             time.sleep(3)
 
             df = self.click_popup_list(driver, list_by_css, df)
@@ -435,9 +378,9 @@ class Crawler_Selenium(object):
             
         print(df)
 
-        df.to_csv(os.path.join(BASE_DIR, save_csv))
+        df.to_csv(os.path.join("data", "csv_file", save_csv))
 
-        self.down_chromedriver(driver)
+        self.sp.down_chromedriver(driver)
 
         logger.info("process end")
         logger.info("--------------------------------------------")

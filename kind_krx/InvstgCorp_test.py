@@ -1,23 +1,12 @@
-import logging
+# import logging
+import sys, os
 import pandas as pd 
 from pandas import DataFrame
 from bs4 import BeautifulSoup, NavigableString
+from libs.logging_process import Logging_process
 
-logger = logging.getLogger()
-logger.setLevel(logging.INFO)
-formatter = logging.Formatter(fmt="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 
-#log console 출력 
-stream_handler = logging.StreamHandler()
-stream_handler.setLevel(logging.INFO)
-stream_handler.setFormatter(formatter)
-logger.addHandler(stream_handler)
-
-#log file 저장 
-file_handler = logging.FileHandler("test.log", encoding = 'utf-8')
-file_handler.setLevel(logging.INFO)
-file_handler.setFormatter(formatter)
-logger.addHandler(file_handler)
+logger = Logging_process("InvstgCorp_test")
 
 class InvstgCorp_Test(object):
 
@@ -31,7 +20,7 @@ class InvstgCorp_Test(object):
 
         load_html_txt = ""
 
-        load_path = "html_save\\html_file.txt"
+        load_path = "data\\html_file\\html_file.txt"
 
         with open(load_path, 'r', encoding = 'utf-8') as f:
 
@@ -190,6 +179,7 @@ class InvstgCorp_Test(object):
 
 
     def run(self):
+        logger.info("InvstgCorp_test run")
 
         # df = DataFrame(columns = ['회사명', '심사청구일', '심사결과', '신규상장', '업종', '기업구분', '결산월', '상장(예정)주식수', '공모(예정)주식수', '상장주선인'])
         df = DataFrame(columns = ['회사명', '설립일', '업종', '결산월', '기업구분',\
