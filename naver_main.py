@@ -2,6 +2,7 @@ import pandas as pd
 from pandas import DataFrame
 
 from naver_finance.doller import Naver_finance_crawler
+from naver_finance.nasdaq import World_Stock_Market
 
 # 달러 환율 
 # url = "https://finance.naver.com/marketindex/exchangeDailyQuote.nhn?marketindexCd=FX_USDKRW"
@@ -32,10 +33,19 @@ from naver_finance.doller import Naver_finance_crawler
 # nfc.run(save_csv)
 
 # 구리
-url = "https://finance.naver.com/marketindex/worldDailyQuote.nhn?fdtc=2&marketindexCd=CMDT_CDY"
+# url = "https://finance.naver.com/marketindex/worldDailyQuote.nhn?fdtc=2&marketindexCd=CMDT_CDY"
 
-df = DataFrame(columns = ['day', '종가'])
+# df = DataFrame(columns = ['day', '종가'])
 
-nfc = Naver_finance_crawler(url, df)
-save_csv = 'Cu.csv'
-nfc.run(save_csv)
+# nfc = Naver_finance_crawler(url, df)
+# save_csv = 'Cu.csv'
+# nfc.run(save_csv)
+
+# 나스닥
+
+url = "https://finance.naver.com/world/sise.nhn?symbol=NAS@IXIC"
+df = DataFrame(columns = ['day', '종가', '시가', '고가', '저가'])
+
+wsm = World_Stock_Market(url, df)
+save_csv = 'nasdaq.csv'
+wsm.run(save_csv)
