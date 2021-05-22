@@ -21,14 +21,20 @@ class Naver_finance_crawler(object):
     def get_page_html(self, url, n):
 
         url = url + "&page={}".format(n)
-
-        html = urlopen(url)
+        logger.info(url)
+        try:
+            html = urlopen(url)
+        except Exception as error:
+            logger.info(error)
+            return None, None
+         
         soup = BeautifulSoup(html.read(), 'html.parser')
+        #print(soup)
 
         thead = soup.find('thead')
         tbody = soup.find('tbody')
 
-        #print(thead)
+        #print(tbody)
 
         return thead, tbody
     
@@ -41,17 +47,18 @@ class Naver_finance_crawler(object):
         
         for i in range(len(data_list)):
 
-            date = data_list[i][0]
+            day = data_list[i][0]
             num = data_list[i][1]
 
-            print(date)
+            print(day)
 
-            if date in df.index:
+            #print(day in df[self.df.columns[0]].values)
+            if day in df[self.df.columns[0]].values:
 
                 return df, False
 
-            #df.at[date, self.df.columns[0]] = date
-            df.at[date, self.df.columns[0]] = num
+            df.at[index, self.df.columns[0]] = day
+            df.at[index, self.df.columns[1]] = num
 
             index += 1
 
@@ -82,42 +89,38 @@ class Naver_finance_crawler(object):
 
         return out_list
 
-    def read_csv(self, save_csv):
+    def read_csv(self, load_path):
 
         try:
-            df = pd.read_csv("data\\csv_file\\"+save_csv, encoding = 'utf-8')
-            logger.info("have file : {} ".format(save_csv))
+            df = pd.read_csv(load_path, encoding = 'utf-8')
+            logger.info("have file : {} ".format(load_path))
+            # load 하면 column 이 하나 더 생겨서 삭제함 
+            df = df.iloc[:,1:]
             return df
         except:
-            logger.info("have not file : {} ".format(save_csv))
+            logger.info("have not file : {} ".format(load_path))
             return self.df
 
     def run(self, save_csv):
 
-        logger.info("run")
+        logger.info("run start")
 
-        df = self.read_csv(save_csv)
+        load_path = os.path.join('data', 'csv_file', save_csv)
+        df = self.read_csv(load_path)
 
-        df.index = df.iloc[:, 0]
-        df = df.iloc[:,1:]
-        # new_df = DataFrame(index = df.iloc[:, 0].values, columns=self.df.columns)
-        # print(new_df)
-        # new_df[self.df.columns[0]] = df[self.df.columns[0]]
-        # print(new_df)
-        # df = new_df
         print(df)
         print(df.columns)
         print(df.index)
 
         #425 가 마지막 
-
-        n = 7
+        # 기본값 1
+        n = 10
 
         print(df[self.df.columns[0]])
 
-        while(False):
+        while(True):
 
-            print(n)
+            #print(n)
 
             try:
                 _, tbody = self.get_page_html(self.url, n)
@@ -142,21 +145,22 @@ class Naver_finance_crawler(object):
 
             n += 1
 
-            if n > 15:
+            # 만들때 테스트 할 때만, 그 외는 주석 처리
+            if n > 20:
                 break
 
-        #df = df[self.df.columns[0]].sort_values(ascending = False)
-        # print(df)
-        # print(df.columns)
-        # print(df.index)
-        #df.to_csv(os.path.join("data", "csv_file", save_csv))
-        #df.to_csv(save_csv)
+        df = df.sort_values(by = self.df.columns[0], ascending = False)
+        df = df.reindex(range(len(df)))
+        print(df)
+        print(df.columns)
+        print(df.index)
+        df.to_csv(os.path.join("data", "csv_file", save_csv))
         logger.info('save csv')
 
 if __name__=="__main__":
 
     url = "https://finance.naver.com/marketindex/exchangeDailyQuote.nhn?marketindexCd=FX_USDKRW"
-    df = DataFrame(columns = ['매매기준율'])
+    df = DataFrame(columns = ['day', '매매기준율'])
 
     naf = Naver_finance_crawler(url, df)
 
