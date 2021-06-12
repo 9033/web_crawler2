@@ -1,4 +1,6 @@
 import logging
+import pathlib
+pathlib.Path('data\\logs').mkdir(parents=True, exist_ok=True) 
 
 class Logging_process(object):
 
