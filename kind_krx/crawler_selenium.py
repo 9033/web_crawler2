@@ -314,33 +314,34 @@ class Crawler_Selenium(object):
         
         #driver 로딩
         driver = self.sp.run_chromedriver()
+        driver.implicitly_wait(5)
         self.main_page = driver.current_window_handle
-        time.sleep(3)
+        #time.sleep(3)
 
         #검색 시작 날짜 
         click_id = 'fromDate'
         day = '20201101'
         self.input_day(driver, click_id, day)
 
-        time.sleep(2)
+        #time.sleep(2)
 
         #검색 종료 날짜
         click_id = 'toDate'
         day = '20210101'
         self.input_day(driver, click_id, day)
 
-        time.sleep(2)
+        #time.sleep(2)
 
         #검색 누르기 
         class_name = 'btn-sprite.type-00.vmiddle.search-btn'
         search = self.sp.find_by_class(driver, class_name)
         search.click()
-        time.sleep(3)
+        #time.sleep(3)
 
         #전체 페이지 갯수 가져오기 
         #나중에 페이지를 넘기기 위해서 가져옴
         cbs4 = Crawler_BS4(driver)
-        time.sleep(3)
+        #time.sleep(3)
         index_num, all_index_num = cbs4.find_index()
         logger.info("index_num : {} ".format(index_num))
         logger.info("all_index_num : {}".format(all_index_num))
@@ -348,10 +349,10 @@ class Crawler_Selenium(object):
         click_css = 'td.first'
 
         list_by_css = self.sp.find_list_by_css(driver, click_css)
-        time.sleep(3)
+        #time.sleep(3)
 
         df = self.click_popup_list(driver, list_by_css, df)
-        time.sleep(3)
+        #time.sleep(3)
 
         next_page_xpath = '//*[@id="main-contents"]/section[2]/div[1]/a[{}]'.format(all_index_num + 3)
 
@@ -362,18 +363,18 @@ class Crawler_Selenium(object):
             logger.info("index_num : {} ".format(index_num))
             
             next_page.click()
-            time.sleep(3)
+            #time.sleep(3)
 
             self.main_page = driver.current_window_handle
-            time.sleep(3)
+            #time.sleep(3)
 
             click_css = 'td.first'
 
             list_by_css = self.sp.find_list_by_css(driver, click_css)
-            time.sleep(3)
+            #time.sleep(3)
 
             df = self.click_popup_list(driver, list_by_css, df)
-            time.sleep(3)
+            #time.sleep(3)
 
             
         print(df)

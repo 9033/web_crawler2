@@ -9,7 +9,7 @@ from libs.selenium_process import Selenium_process
 logger = Logging_process('nasdaq')
 
 class Crawler_BS4(object):
-    """crawler 부분"""
+    """Selenium driver를 이용한 stock index crawler 부분"""
 
     def __init__(self, driver):
         """driver를 받아 BeautifulSoup 객체를 생성한다."""
@@ -104,9 +104,9 @@ class Crawler_BS4(object):
         out_list = self.get_data(tbody)
         #print(out_list)
 
-        df = self.data_to_df(df, out_list)
+        df, conti = self.data_to_df(df, out_list)
 
-        return df 
+        return df, conti
 
 
 

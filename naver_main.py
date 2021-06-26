@@ -5,13 +5,13 @@ from naver_finance.doller import Naver_finance_crawler
 from naver_finance.nasdaq import World_Stock_Market
 
 # 달러 환율 
-# url = "https://finance.naver.com/marketindex/exchangeDailyQuote.nhn?marketindexCd=FX_USDKRW"
+url = "https://finance.naver.com/marketindex/exchangeDailyQuote.nhn?marketindexCd=FX_USDKRW"
 
-# df = DataFrame(columns = ['day', '매매기준율'])
+df = DataFrame(columns = ['day', '매매기준율'])
 
-# nfc = Naver_finance_crawler(url, df)
-# save_csv = 'doller.csv'
-# nfc.run(save_csv)
+nfc = Naver_finance_crawler(url, df)
+save_csv = 'doller.csv'
+nfc.run(save_csv)
 
 # 국내 금 시세
 # url = "https://finance.naver.com/marketindex/goldDailyQuote.nhn?"
@@ -43,9 +43,9 @@ from naver_finance.nasdaq import World_Stock_Market
 
 # 나스닥
 
-url = "https://finance.naver.com/world/sise.nhn?symbol=NAS@IXIC"
-df = DataFrame(columns = ['day', '종가', '시가', '고가', '저가'])
+# url = "https://finance.naver.com/world/sise.nhn?symbol=NAS@IXIC"
+# df = DataFrame(columns = ['day', '종가', '시가', '고가', '저가'])
 
-wsm = World_Stock_Market(url, df)
-save_csv = 'nasdaq.csv'
-wsm.run(save_csv)
+# wsm = World_Stock_Market(url, df)
+# save_csv = 'nasdaq.csv'
+# wsm.run(save_csv)

@@ -1,0 +1,155 @@
+{
+    "exchange_rate_index" : [
+        {
+            "name" : "won-doller",
+            "url" : "https://finance.naver.com/marketindex/exchangeDailyQuote.nhn?marketindexCd=FX_USDKRW",
+            "page" : 2
+        },
+        {
+            "name" : "won-eur",
+            "url" : "https://finance.naver.com/marketindex/exchangeDailyQuote.nhn?marketindexCd=FX_EURKRW",
+            "page" : 4
+        },
+        {
+            "name" : "won-jpy",
+            "url" : "https://finance.naver.com/marketindex/exchangeDailyQuote.nhn?marketindexCd=FX_JPYKRW",
+            "page" : 2
+        }
+    ],
+    "interest_rate_index" : [
+        {
+            "name" : "CD interest",
+            "url" : "https://finance.naver.com/marketindex/interestDailyQuote.nhn?marketindexCd=IRR_CD91",
+            "page" : 3
+        },
+        {
+            "name" : "Call interest",
+            "url" : "https://finance.naver.com/marketindex/interestDailyQuote.nhn?marketindexCd=IRR_CALL",
+            "page" : 4
+        },
+        {
+            "name" : "GOVT03Y interest",
+            "url" : "https://finance.naver.com/marketindex/interestDailyQuote.nhn?marketindexCd=IRR_GOVT03Y",
+            "page" : 3
+        },
+        {
+            "name" : "CORP03Y interest",
+            "url" : "https://finance.naver.com/marketindex/interestDailyQuote.nhn?marketindexCd=IRR_CORP03Y",
+            "page" : 5
+        }
+    ],
+    "gold_oil_index" : [
+        {
+            "name" : "korea gold",
+            "url" : "https://finance.naver.com/marketindex/goldDailyQuote.nhn?",
+            "page" : 3
+        },
+        {
+            "name" : "global gold",
+            "url" : "https://finance.naver.com/marketindex/worldDailyQuote.nhn?marketindexCd=CMDT_GC&fdtc=2",
+            "page" : 4
+        },
+        {
+            "name" : "두바이 oil",
+            "url" : "https://finance.naver.com/marketindex/worldDailyQuote.nhn?marketindexCd=OIL_DU&fdtc=2",
+            "page" : 3
+        },
+        {
+            "name" : "유가WTI",
+            "url" : "https://finance.naver.com/marketindex/worldDailyQuote.nhn?marketindexCd=OIL_CL&fdtc=2",
+            "page" : 5
+
+        }
+    ],
+    "non_ferrous_metal_index" : [
+        {
+            "name" : "구리",
+            "url" : "https://finance.naver.com/marketindex/worldDailyQuote.nhn?fdtc=2&marketindexCd=CMDT_CDY",
+            "page" : 1
+        },
+        {
+            "name" : "납",
+            "url" : "https://finance.naver.com/marketindex/worldDailyQuote.nhn?fdtc=2&marketindexCd=CMDT_PDY",
+            "page" : 3
+        },
+        {
+            "name" : "아연",
+            "url" : "https://finance.naver.com/marketindex/worldDailyQuote.nhn?fdtc=2&marketindexCd=CMDT_ZDY",
+            "page" : 2
+        },
+        {
+            "name" : "니켈",
+            "url" : "https://finance.naver.com/marketindex/worldDailyQuote.nhn?fdtc=2&marketindexCd=CMDT_NDY",
+            "page" : 2
+        },
+        {
+            "name" : "알루미늄합금",
+            "url" : "https://finance.naver.com/marketindex/worldDailyQuote.nhn?fdtc=2&marketindexCd=CMDT_AAY",
+            "page" : 3
+        },
+        {
+            "name" : "주석",
+            "url" : "https://finance.naver.com/marketindex/worldDailyQuote.nhn?fdtc=2&marketindexCd=CMDT_SDY",
+            "page" : 3
+        }
+    ],
+    "agricultural_product_index" : [
+        {
+            "name" : "옥수수",
+            "url" : "https://finance.naver.com/marketindex/worldDailyQuote.nhn?fdtc=2&marketindexCd=CMDT_C",
+            "page" : 2
+        },
+        {
+            "name" : "대두",
+            "url" : "https://finance.naver.com/marketindex/worldDailyQuote.nhn?fdtc=2&marketindexCd=CMDT_S",
+            "page" : 4
+        },
+        {
+            "name" : "대두박",
+            "url" : "https://finance.naver.com/marketindex/worldDailyQuote.nhn?fdtc=2&marketindexCd=CMDT_SM",
+            "page" : 3
+        },
+        {
+            "name" : "대두유",
+            "url" : "https://finance.naver.com/marketindex/worldDailyQuote.nhn?fdtc=2&marketindexCd=CMDT_BO",
+            "page" : 2
+        },
+        {
+            "name" : "소맥",
+            "url" : "https://finance.naver.com/marketindex/worldDailyQuote.nhn?fdtc=2&marketindexCd=CMDT_W",
+            "page" : 3
+        },
+        {
+            "name" : "쌀",
+            "url" : "https://finance.naver.com/marketindex/worldDailyQuote.nhn?fdtc=2&marketindexCd=CMDT_RR",
+            "page" : 4
+        }
+    ],
+    "stock_index" : [
+        {
+            "name" : "nasdaq",
+            "url": "https://finance.naver.com/world/sise.nhn?symbol=NAS@IXIC",
+            "page" : 25
+        },
+        {
+            "name" : "DJI",
+            "url" : "https://finance.naver.com/world/sise.nhn?symbol=DJI@DJI",
+            "page" : 7
+        },
+        {
+            "name" : "S&P 500",
+            "url" : "https://finance.naver.com/world/sise.nhn?symbol=SPI@SPX",
+            "page" : 9
+        },
+        {
+            "name" : "상해종합",
+            "url" : "https://finance.naver.com/world/sise.nhn?symbol=SHS@000001",
+            "page" : 15
+        },
+        {
+            "name" : "니케이225",
+            "url" : "https://finance.naver.com/world/sise.nhn?symbol=NII@NI225",
+            "page" : 22
+        }
+    ]
+}
